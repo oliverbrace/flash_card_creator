@@ -15,3 +15,9 @@ def canny_edge_detection(image, blur=7, threshold1=40, threshold2=100):
 
 def invert_black_white(image):
     return cv2.bitwise_not(image)
+
+
+def convert_to_rgb(image):
+    if len(image.shape) == 2:  # Check if image is grayscale
+        image = cv2.cvtColor(image, cv2.COLOR_GRAY2RGB)
+    return image

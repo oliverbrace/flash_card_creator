@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+from PIL import Image, ImageDraw
 
 
 def num_channels_check(img):
@@ -61,3 +62,10 @@ def percentage_colour_pixels(image, colour):
         _type_: _description_
     """
     return np.sum(image == colour) / get_pixel_count(image)
+
+
+def text_size(text, font):
+    im = Image.new(mode="P", size=(0, 0))
+    draw = ImageDraw.Draw(im)
+    _, _, width, height = draw.textbbox((0, 0), text=text, font=font)
+    return width, height
