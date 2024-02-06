@@ -7,8 +7,8 @@ flash_card_w = a4_width / 2
 adj_a4_h = a4_height * 8
 adj_a4_w = a4_width * 8
 
-adj_flash_card_h = flash_card_h * 8
-adj_flash_card_w = flash_card_w * 8
+adj_flash_card_h = int(flash_card_h * 8)
+adj_flash_card_w = int(flash_card_w * 8)
 
 
 card_ratio = adj_flash_card_w / adj_flash_card_h

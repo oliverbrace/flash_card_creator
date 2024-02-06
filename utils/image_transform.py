@@ -40,16 +40,17 @@ def change_ratio(image, target_ratio=card_ratio):
 
 def resize_image(image):
     image = convert_to_rgb(image)
-    dim = (int(adj_flash_card_w), int(adj_flash_card_h))
+    dim = (adj_flash_card_w, adj_flash_card_h)
     resized = cv2.resize(image, dim, interpolation=cv2.INTER_AREA)
     return resized
 
 
 def add_border(image, border_size=1, border_color=(0, 0, 0)):
     b_s = border_size
-    return cv2.copyMakeBorder(
+    border_image = cv2.copyMakeBorder(
         image, b_s, b_s, b_s, b_s, cv2.BORDER_CONSTANT, value=border_color
     )
+    return resize_image(border_image)
 
 
 def combine_images_into_grid(images, rows=4, cols=2):
@@ -66,16 +67,15 @@ def combine_images_into_grid(images, rows=4, cols=2):
 
         for i, img_idx in enumerate(range(start_idx, end_idx)):
             image = add_border(images[img_idx])
-            image = resize_image(image)
 
             # Calculate the position for each image on the page
             row = i // cols
             col = i % cols
-            start_row = int(row * adj_flash_card_h)
-            end_row = int(start_row + adj_flash_card_h)
+            start_row = row * adj_flash_card_h
+            end_row = start_row + adj_flash_card_h
 
-            start_col = int(col * adj_flash_card_w)
-            end_col = int(start_col + adj_flash_card_w)
+            start_col = col * adj_flash_card_w
+            end_col = start_col + adj_flash_card_w
 
             canvas[start_row:end_row, start_col:end_col, :] = image
 

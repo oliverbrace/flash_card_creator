@@ -11,28 +11,22 @@ from utils.image_transform import add_subtext_to_image, change_ratio
 def create_english_text_image(
     text, font_size=8, thickness=1, font=cv2.FONT_HERSHEY_TRIPLEX
 ):
-    # Need values to be whole numbers
-    height = int(adj_flash_card_h * 4)
-    width = int(adj_flash_card_w * 4)
     # Create a white image
-    image = np.ones((height, width, 3), dtype=np.uint8) * 255
+    image = np.ones((adj_flash_card_h, adj_flash_card_w, 3), dtype=np.uint8) * 255
 
     # Calculate the position to center the text
     text_size = cv2.getTextSize(text, font, font_size, thickness)[0]
-    x = (width - text_size[0]) // 2
-    y = (height + text_size[1]) // 2
+    x = (adj_flash_card_w - text_size[0]) // 2
+    y = (adj_flash_card_h + text_size[1]) // 2
 
     # Add text to the image
     cv2.putText(image, text, (x, y), font, font_size, (0, 0, 0), thickness)
     return image
 
 
-def create_japanese_text_image(text, font_size=400, font=cv2.FONT_HERSHEY_TRIPLEX):
-    # Need values to be whole numbers
-    image_height = int(adj_flash_card_h * 4)
-    image_width = int(adj_flash_card_w * 4)
+def create_japanese_text_image(text, font_size=100, font=cv2.FONT_HERSHEY_TRIPLEX):
     # Create a white image
-    image = np.ones((image_height, image_width, 3), dtype=np.uint8) * 255
+    image = np.ones((adj_flash_card_h, adj_flash_card_w, 3), dtype=np.uint8) * 255
 
     # Convert the image to RGB (OpenCV uses BGR)
     cv2_im_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -46,15 +40,15 @@ def create_japanese_text_image(text, font_size=400, font=cv2.FONT_HERSHEY_TRIPLE
     # Get the text size
     text_width, text_height = text_size(text, font)
 
-    if text_width > image_width:
+    if text_width > adj_flash_card_w:
         text = text.replace(" ", "\n")
         text_width, text_height = text_size(text, font)
-        if text_width > image_width:
+        if text_width > adj_flash_card_w:
             raise Exception("Word is too long. Get back to coding monkey")
 
     # Calculate the position to center the text
-    x = (image_width - text_width) // 2
-    y = (image_height - text_height) // 2
+    x = (adj_flash_card_w - text_width) // 2
+    y = (adj_flash_card_h - text_height) // 2
 
     # Draw the text
     draw.text((x, y), text, font=font, align="center", fill=(0, 0, 0))
@@ -69,12 +63,11 @@ def generate_pic_image(image, text):
     inverted_contoured_image = invert_black_white(contoured_image)
 
     _, width = inverted_contoured_image.shape[:2]
-    card_width = adj_flash_card_w * 8
-    card_height = adj_flash_card_h * 8
+    card_width = adj_flash_card_w
+    card_height = adj_flash_card_h
     if card_width < width:
         inverted_contoured_image = cv2.resize(
-            inverted_contoured_image,
-            (int(card_width), int(card_height)),
+            inverted_contoured_image, (card_width, card_height)
         )
 
     add_subtext_to_image(inverted_contoured_image, text)

@@ -10,7 +10,8 @@ def run():
     for file_name in file_names:
         original_image_s = ImageSerialize()
         original_image_s.load_file_image(file_name, original_image_path)
-        pic_image = generate_pic_image(original_image_s.original_image, file_name)
+        card_test, _ = file_name.split(".")
+        pic_image = generate_pic_image(original_image_s.original_image, card_test)
         ImageSerialize().output_image(pic_image, file_name, contour_image_path)
 
 
