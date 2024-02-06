@@ -1,0 +1,36 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Combine cards",
+            "type": "python",
+            "request": "launch",
+            "program": "combine_images.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Generate japanese word cards",
+            "type": "python",
+            "request": "launch",
+            "program": "generate_japanese_word_cards.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Generate english word cards",
+            "type": "python",
+            "request": "launch",
+            "program": "generate_english_word_cards.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Generate pic cards",
+            "type": "python",
+            "request": "launch",
+            "program": "generate_pic_cards.py",
+            "console": "integratedTerminal"
+        }
+    ]
+}
